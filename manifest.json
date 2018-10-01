@@ -12,5 +12,9 @@
   "view": {
     "defaultWidth": 2,
     "defaultHeight": 2
+  },
+  "dependencies": {
+    "Hub": ">=2017.4"
   }
 }
+
