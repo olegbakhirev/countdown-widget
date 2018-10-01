@@ -1,0 +1,108 @@
+@value unit from "@jetbrains/ring-ui/components/global/global.css";
+
+:global(.widget-body) {
+  margin: 0;
+  padding: calc(unit * 2);
+
+  background: #fff;
+
+  font-size: var(--ring-font-size);
+}
+
+.countdownTitle {
+  margin-left: 10px;
+
+  color: var(--ring-text-color);
+}
+
+.countdownZeroTitle {
+  margin-left: 10px;
+
+  color: var(--ring-error-color);
+}
+
+.widget {
+  composes: font from "@jetbrains/ring-ui/components/global/global.css";
+
+  margin: 0;
+  padding: 0;
+
+  white-space: nowrap;
+}
+
+.countdownItem {
+  display: inline-block;
+
+  height: 80px;
+}
+
+.countdownItemValue {
+  composes: monospace-font from "@jetbrains/ring-ui/components/global/global.css";
+
+  padding: 20px;
+
+  color: var(--ring-text-color);
+
+  border: 1px solid var(--ring-border-hover-color);
+
+  border-radius: 10px;
+
+  font-size: 30px;
+}
+
+.countdownItem:not(:first-child) .countdownItemValue {
+  margin-left: 20px;
+}
+
+.countdownItemZeroValue {
+  color: var(--ring-error-color);
+
+  border: 1px solid var(--ring-icon-error-color);
+}
+
+.itemDescription {
+  composes: monospace-font from "@jetbrains/ring-ui/components/global/global.css";
+
+  padding-left: 20px;
+
+  text-align: center;
+}
+
+.countdownItem:first-child .itemDescription {
+  padding-left: 0;
+}
+
+.formFooter {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.progressBar {
+  max-width: 100%;
+
+  margin: 16px auto auto;
+}
+
+.countdownBlock {
+  float: left;
+}
+
+.countdownBlockWrapper {
+  width: 380px;
+
+  margin: auto;
+}
+
+.mainPresentationArea {
+  position: absolute;
+  top: 43%;
+  left: 0;
+
+  width: 100%;
+
+  transform: translate(0, -50%);
+
+  text-align: center;
+}
