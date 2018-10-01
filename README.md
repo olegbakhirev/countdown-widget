@@ -1,5 +1,5 @@
 # Countdown widget 
-Shows countdown timer to date set in a future 
+Shows countdown timer to date set in a future. 
 Works in YouTrack 2018.1+, Hub 2018.1+, Upsource 2018.1+.
 ![](https://raw.githubusercontent.com/olegbakhirev/countdown-widget/master/widget.png) 
 
