@@ -58,6 +58,8 @@ class Widget extends Component {
   initialize(dashboardApi) {
     dashboardApi.readConfig().then(config => {
       if (!config) {
+        dashboardApi.enterConfigMode();
+        this.setState({isConfiguring: true});
         return;
       }
       this.setState(
@@ -80,9 +82,16 @@ class Widget extends Component {
   };
 
   cancelConfig = async () => {
-    this.setState({isConfiguring: false});
-    await this.props.dashboardApi.exitConfigMode();
-    this.initialize(this.props.dashboardApi);
+    const {dashboardApi} = this.props;
+
+    const config = await dashboardApi.readConfig();
+    if (!config) {
+      dashboardApi.removeWidget();
+    } else {
+      this.setState({isConfiguring: false});
+      await this.props.dashboardApi.exitConfigMode();
+      this.initialize(dashboardApi);
+    }
   };
 
   changeDateTime = countdownDateTime => {

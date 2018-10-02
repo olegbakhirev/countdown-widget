@@ -50,6 +50,30 @@
   font-size: 30px;
 }
 
+@media screen and (max-width: 400px) {
+  .countdownItemValue {
+    padding: 10px;
+
+    font-size: 20px;
+  }
+
+  .countdownTitle {
+    margin: 15px auto 5px;
+
+    font-size: 15px;
+  }
+
+  .countdownItem {
+    height: 30px;
+  }
+
+  .progressBar {
+    max-width: 100%;
+
+    margin: 0 auto auto;
+  }
+}
+
 .countdownItem:not(:first-child) .countdownItemValue {
   margin-left: 20px;
 }
@@ -82,7 +106,7 @@
 .progressBar {
   max-width: 100%;
 
-  margin: 16px auto auto;
+  margin: 5px auto auto;
 }
 
 .countdownBlock {
@@ -90,7 +114,9 @@
 }
 
 .countdownBlockWrapper {
-  width: 380px;
+  display: flex;
+
+  justify-content: center;
 
   margin: auto;
 }

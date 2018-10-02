@@ -1,7 +1,7 @@
 {
   "key": "countdown-widget",
   "name": "Countdown Widget",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Widget displaying countdown timer",
   "author": "oleg.bakhirev@gmail.com",
   "iconUrl": "pict/timer.png",
