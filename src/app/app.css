@@ -5,14 +5,14 @@
   padding: calc(unit * 2);
 
   background: #fff;
-
-  font-size: var(--ring-font-size);
 }
 
 .countdownTitle {
-  margin-left: 10px;
+  margin: 15px auto 5px;
 
   color: var(--ring-text-color);
+
+  font-size: 15px;
 }
 
 .countdownZeroTitle {
@@ -33,13 +33,13 @@
 .countdownItem {
   display: inline-block;
 
-  height: 80px;
+  height: 60px;
 }
 
 .countdownItemValue {
   composes: monospace-font from "@jetbrains/ring-ui/components/global/global.css";
 
-  padding: 20px;
+  padding: 13px;
 
   color: var(--ring-text-color);
 
@@ -47,7 +47,7 @@
 
   border-radius: 10px;
 
-  font-size: 30px;
+  font-size: 25px;
 }
 
 @media screen and (max-width: 400px) {
@@ -106,7 +106,7 @@
 .progressBar {
   max-width: 100%;
 
-  margin: 5px auto auto;
+  margin: 0px auto auto;
 }
 
 .countdownBlock {
