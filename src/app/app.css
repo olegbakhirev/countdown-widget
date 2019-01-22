@@ -74,6 +74,7 @@
   }
 }
 
+/* stylelint-disable-next-line selector-max-specificity */
 .countdownItem:not(:first-child) .countdownItemValue {
   margin-left: 20px;
 }
@@ -92,6 +93,7 @@
   text-align: center;
 }
 
+/* stylelint-disable-next-line selector-max-specificity */
 .countdownItem:first-child .itemDescription {
   padding-left: 0;
 }
@@ -106,7 +108,7 @@
 .progressBar {
   max-width: 100%;
 
-  margin: 0px auto auto;
+  margin: 0 auto auto;
 }
 
 .countdownBlock {
