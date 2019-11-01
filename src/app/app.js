@@ -118,7 +118,6 @@ class Widget extends Component {
       <DateTimePicker
         onChange={this.changeDateTime}
         value={this.state.countdownDateTime}
-        locale={'RU-RU'}
       />
       <Panel className={styles.formFooter}>
         <Button
