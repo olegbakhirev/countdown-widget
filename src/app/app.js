@@ -9,6 +9,7 @@ import Button from '@jetbrains/ring-ui/components/button/button';
 import DateTimePicker from 'react-datetime-picker';
 import Input, {Size as InputSize} from '@jetbrains/ring-ui/components/input/input';
 import ProgressBar from '@jetbrains/ring-ui/components/progress-bar/progress-bar';
+import Checkbox from '@jetbrains/ring-ui/components/checkbox/checkbox';
 
 import 'file-loader?name=[name].[ext]!../../manifest.json'; // eslint-disable-line import/no-unresolved
 
@@ -39,7 +40,8 @@ class Widget extends Component {
 
     this.state = {
       isConfiguring: true,
-      countdownDateTime: new Date()
+      countdownDateTime: new Date(),
+      showSeconds: true
     };
 
     registerWidgetApi({
@@ -67,16 +69,22 @@ class Widget extends Component {
           isConfiguring: false,
           countdownDateTime: new Date(config.countdownDateTime),
           countdownTitle: config.countdownTitle,
-          totalDiffMs: config.totalDiffMs
+          totalDiffMs: config.totalDiffMs,
+          showSeconds: config.showSeconds || true
         }
       );
     });
   }
 
   saveConfig = async () => {
-    const {countdownDateTime, countdownTitle, totalDiffMs} = this.state;
+    const {
+      countdownDateTime,
+      countdownTitle,
+      totalDiffMs,
+      showSeconds
+    } = this.state;
     await this.props.dashboardApi.storeConfig(
-      {countdownDateTime, countdownTitle, totalDiffMs});
+      {countdownDateTime, countdownTitle, totalDiffMs, showSeconds});
     this.setState({isConfiguring: false});
     this.props.dashboardApi.setTitle(`Time to: ${countdownTitle}`);
   };
@@ -104,6 +112,10 @@ class Widget extends Component {
     countdownTitle: e.target.value
   });
 
+  changeShowSeconds = e => this.setState({
+    showSeconds: e.target.checked
+  });
+
   renderConfiguration() {
     const countdownTitle =
       this.state.countdownTitle ? this.state.countdownTitle : '';
@@ -119,6 +131,13 @@ class Widget extends Component {
         onChange={this.changeDateTime}
         value={this.state.countdownDateTime}
       />
+      <div className={styles.additionalSettings}>
+        <Checkbox
+          label={'Show seconds in countdown'}
+          checked={this.state.showSeconds}
+          onChange={this.changeShowSeconds}
+        />
+      </div>
       <Panel className={styles.formFooter}>
         <Button
           primary={true}
@@ -133,7 +152,13 @@ class Widget extends Component {
   getItemStringRepresentation = item => (item.toString().length === 1 ? `0${item}` : item);
 
   render() {
-    const {isConfiguring, countdownTitle, countdownDateTime, totalDiffMs} =
+    const {
+      isConfiguring,
+      countdownTitle,
+      countdownDateTime,
+      totalDiffMs,
+      showSeconds
+    } =
       this.state;
 
     if (isConfiguring) {
@@ -191,11 +216,12 @@ class Widget extends Component {
                   {this.getItemStringRepresentation(diffMinutes)}</div>
                 <div className={styles.itemDescription}>{'Minutes'}</div>
               </div>
+              {showSeconds &&
               <div className={styles.countdownItem}>
                 <div className={itemValueClass}>
                   {this.getItemStringRepresentation(diffSeconds)}</div>
                 <div className={styles.itemDescription}>{'Seconds'}</div>
-              </div>
+              </div>}
               <ProgressBar
                 value={progressValue}
                 className={styles.progressBar}
