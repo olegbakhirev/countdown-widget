@@ -1,9 +1,9 @@
 {
   "key": "countdown-widget",
   "name": "Countdown Widget",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Widget displaying countdown timer",
-  "author": "oleg.bakhirev@gmail.com",
+  "author": "JetBrains",
   "iconUrl": "pict/timer.png",
   "products": {
     "Hub": "2018.1",
