@@ -1,7 +1,7 @@
 import 'babel-polyfill';
 import DashboardAddons from 'hub-dashboard-addons';
 import React, {Component} from 'react';
-import classNames from 'class-names';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import {render} from 'react-dom';
 import Panel from '@jetbrains/ring-ui/components/panel/panel';
@@ -10,8 +10,6 @@ import DateTimePicker from 'react-datetime-picker';
 import Input, {Size as InputSize} from '@jetbrains/ring-ui/components/input/input';
 import ProgressBar from '@jetbrains/ring-ui/components/progress-bar/progress-bar';
 import Checkbox from '@jetbrains/ring-ui/components/checkbox/checkbox';
-
-import 'file-loader?name=[name].[ext]!../../manifest.json'; // eslint-disable-line import/no-unresolved
 
 
 import styles from './app.css';
@@ -70,7 +68,7 @@ class Widget extends Component {
           countdownDateTime: new Date(config.countdownDateTime),
           countdownTitle: config.countdownTitle,
           totalDiffMs: config.totalDiffMs,
-          showSeconds: config.showSeconds || true
+          showSeconds: config.showSeconds && true
         }
       );
     });
