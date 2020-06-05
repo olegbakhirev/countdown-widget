@@ -84,7 +84,7 @@
 }
 
 .countdownItem .countdownItemValue {
-  width: 35px;
+  width: auto;
 }
 
 /* stylelint-disable-next-line selector-max-specificity */
