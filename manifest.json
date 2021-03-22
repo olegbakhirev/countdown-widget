@@ -1,8 +1,8 @@
 {
   "key": "countdown-widget",
   "name": "Countdown Widget",
-  "version": "1.2.1",
-  "description": "Widget displaying countdown timer",
+  "version": "1.5.0",
+  "description": "Widget displaying countdown or elapsed timer",
   "author": "JetBrains",
   "iconUrl": "pict/timer.png",
   "products": {

@@ -25,6 +25,9 @@ const SEC_IN_HOUR = SEC_IN_MIN * MIN_IN_HOUR;
 const MS_IN_HOUR = MS_IN_SEC * SEC_IN_HOUR;
 const MS_IN_DAY = MS_IN_HOUR * HOURS_IN_DAY;
 
+const COUNTDOWN_PREFIX = 'Time to:';
+const ELAPSED_PREFIX = 'Time from:';
+
 
 class Widget extends Component {
   static propTypes = {
@@ -39,7 +42,9 @@ class Widget extends Component {
     this.state = {
       isConfiguring: true,
       countdownDateTime: new Date(),
-      showSeconds: true
+      showSeconds: true,
+      isElapsedTimer: false,
+      titlePrefix: COUNTDOWN_PREFIX
     };
 
     registerWidgetApi({
@@ -68,9 +73,12 @@ class Widget extends Component {
           countdownDateTime: new Date(config.countdownDateTime),
           countdownTitle: config.countdownTitle,
           totalDiffMs: config.totalDiffMs,
-          showSeconds: config.showSeconds && true
+          showSeconds: config.showSeconds && true,
+          isElapsedTimer: config.isElapsedTimer,
+          titlePrefix: config.isElapsedTimer ? ELAPSED_PREFIX : COUNTDOWN_PREFIX
         }
       );
+      this.setWidgetTitle(config.isElapsedTimer, config.countdownTitle);
     });
   }
 
@@ -79,13 +87,26 @@ class Widget extends Component {
       countdownDateTime,
       countdownTitle,
       totalDiffMs,
-      showSeconds
+      showSeconds,
+      isElapsedTimer
     } = this.state;
     await this.props.dashboardApi.storeConfig(
-      {countdownDateTime, countdownTitle, totalDiffMs, showSeconds});
+      {countdownDateTime,
+        countdownTitle,
+        totalDiffMs,
+        showSeconds,
+        isElapsedTimer});
     this.setState({isConfiguring: false});
-    this.props.dashboardApi.setTitle(`Time to: ${countdownTitle}`);
+    this.setWidgetTitle(isElapsedTimer, countdownTitle);
   };
+
+  setWidgetTitle(isElapsedTimer, countdownTitle) {
+    if (!isElapsedTimer) {
+      this.props.dashboardApi.setTitle(`${COUNTDOWN_PREFIX} ${countdownTitle}`);
+    } else {
+      this.props.dashboardApi.setTitle(`${ELAPSED_PREFIX} ${countdownTitle}`);
+    }
+  }
 
   cancelConfig = async () => {
     const {dashboardApi} = this.props;
@@ -114,6 +135,10 @@ class Widget extends Component {
     showSeconds: e.target.checked
   });
 
+  changeIsElapsedTimer = e => this.setState({
+    isElapsedTimer: e.target.checked
+  });
+
   renderConfiguration() {
     const countdownTitle =
       this.state.countdownTitle ? this.state.countdownTitle : '';
@@ -121,7 +146,7 @@ class Widget extends Component {
     return (<div className={styles.widget}>
       <Input
         size={InputSize.FULL}
-        placeholder="Enter countdown title"
+        placeholder="Enter widget title"
         onChange={this.changeCountdownTitle}
         value={countdownTitle}
       />
@@ -134,6 +159,13 @@ class Widget extends Component {
           label={'Show seconds in countdown'}
           checked={this.state.showSeconds}
           onChange={this.changeShowSeconds}
+        />
+      </div>
+      <div className={styles.additionalSettings}>
+        <Checkbox
+          label={'Show as elapsed from selected date'}
+          checked={this.state.isElapsedTimer}
+          onChange={this.changeIsElapsedTimer}
         />
       </div>
       <Panel className={styles.formFooter}>
@@ -155,7 +187,9 @@ class Widget extends Component {
       countdownTitle,
       countdownDateTime,
       totalDiffMs,
-      showSeconds
+      showSeconds,
+      titlePrefix,
+      isElapsedTimer
     } =
       this.state;
 
@@ -163,8 +197,14 @@ class Widget extends Component {
       return this.renderConfiguration();
     }
 
-    let timeDiff =
-      Math.abs(countdownDateTime.getTime()) - Date.now();
+    let timeDiff = 0;
+    if (isElapsedTimer) {
+      timeDiff =
+        Date.now() - Math.abs(countdownDateTime.getTime());
+    } else {
+      timeDiff =
+        Math.abs(countdownDateTime.getTime()) - Date.now();
+    }
 
     timeDiff = timeDiff < MS_IN_SEC ? 0 : timeDiff;
 
@@ -196,7 +236,7 @@ class Widget extends Component {
     return (
       <div className={styles.widget}>
         <div className={styles.mainPresentationArea}>
-          <h1 className={titleClass}>{`Time to: ${countdownTitle}`}</h1>
+          <h1 className={titleClass}>{`${titlePrefix} ${countdownTitle}`}</h1>
           <div className={styles.countdownBlockWrapper}>
             <div className={styles.countdownBlock}>
               <div className={styles.countdownItem}>
